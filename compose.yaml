@@ -1,7 +1,17 @@
+version: '3.8'
+
 services:
-  oracle:
-    image: 'gvenzl/oracle-free:latest'
-    environment:
-      - 'ORACLE_PASSWORD=secret'
+  oracle-db:
+    image: oracle/database:19.3.0-ee
+    container_name: docker-oracle
     ports:
-      - '1521'
+      - "1521:1521"
+      - "5500:5500"
+    environment:
+      - ORACLE_PDB=mpss
+      - ORACLE_PWD=mpss
+      - INIT_SGA_SIZE=3000
+      - INIT_PGA_SIZE=1000
+    volumes:
+      - /Users/mateuszparasiewicz/IdeaProjects/git-api-task/src/main/resources/docker/opt/oracle/oradata
+    restart: always
